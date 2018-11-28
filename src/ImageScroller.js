@@ -271,10 +271,11 @@ export default class ImageScroller extends React.Component {
                 />
 
                 <IndexButtonsContainer>
-                    {images.map((_, imageIndex) => (
+                    {images.map((image, imageIndex) => (
                         <IndexButton
                             key={imageIndex}
                             index={imageIndex + 1}
+                            image={image}
                             isCurrent={current.includes(imageIndex)}
                             isNext={next === imageIndex}
                             isPrevious={previous === imageIndex}
