@@ -36,6 +36,7 @@
     },
     "dependencies": {
         "emotion": "^10.0.0-beta.13",
+        "event-stream": "^3.3.4",
         "smoothscroll-polyfill": "^0.4.3"
     },
     "devDependencies": {
