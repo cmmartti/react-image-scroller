@@ -2,7 +2,7 @@
 
 A simple scrolling image gallery for React. Unlike every other image gallery, this one is designed to show multiple images at once, without cropping them. It is not designed to be a cinematic experience, but rather an alternative to splashing a bunch of images on screen directly. Great for screenshots and other odd-shaped content.
 
-Without JavaScript, React-Image-Scroller will fall back to a simple horizontally-scrolling container with a scrollbar. Otherwise, the scrollbar is automatically hidden and the scrolling container is augmented with additional behaviour, such as next/previous buttons, scroll snapping, and index buttons.
+When used with server-side rendering and a client does not have JavaScript, React-Image-Scroller will fall back to a simple horizontally-scrolling container with a scrollbar. Otherwise, the scrollbar is automatically hidden and the scrolling container is augmented with additional behaviour, such as next/previous buttons, scroll snapping, and index buttons.
 
 ## Demo
 
@@ -51,9 +51,9 @@ import ImageScroller from 'react-image-scroller';
 
 ## Customisation and Configuration
 
-React-Image-Scroller has no configuration. However, the default base components can easily be replaced with your own, allowing you to change how they look and work.
+React-Image-Scroller has no configuration. However, the default base components can easily be replaced with your own, allowing you to change how they look and work. A complete example is shown at the end of this section.
 
-A React-Image-Scroller has the following internal structure and takes the following props:
+A React-Image-Scroller component has the following internal structure. The props shown are passed to each component, in addition to `innerProps` (see below).
 
 ```jsx
 <ImageScrollerContainer innerRef>
