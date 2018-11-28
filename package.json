@@ -1,7 +1,7 @@
 {
     "name": "react-image-scroller",
     "version": "0.1.0",
-    "description": "A simple image gallery for React based on a scrolling container controlled with IntersectionObserver.",
+    "description": "A simple scrolling image gallery for React.",
     "author": "Charles Marttinen <mail@charlesmarttinen.ca>",
     "main": "lib/index.js",
     "module": "dist/react-image-scroller.esm.js",

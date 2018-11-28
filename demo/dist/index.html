@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<head>
+    <title>React-Image-Scroller Demo</title>
+    <style>
+        html {
+            height: 100%;
+            box-sizing: border-box;
+            background-color: lavender;
+            font-family: sans-serif;
+        }
+        html * {
+            box-sizing: border-box;
+        }
+        body {
+            margin: 0;
+            height: 100%;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.5em 2em;
+            background: ghostwhite;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        #app {
+            max-width: 100%;
+            flex: 1;
+        }
+        footer {
+            margin-top: 2em;
+        }
+        h1 {
+            margin: 0;
+        }
+
+        @media (max-width: 1000px) {
+            .container {
+                padding: 1em 1.25em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>React-Image-Scroller Demo</h1>
+        <h2>
+            <a href="http://github.com/cmmartti/react-image-scroller"
+                >View project on GitHub</a
+            >
+        </h2>
+        <div id="app"></div>
+        <footer>Copyright &copy; Charles Marttinen 2018. MIT Licensed.</footer>
+    </div>
+    <script src="app.js"></script>
+</body>
