@@ -1,7 +1,7 @@
 import React from 'react';
-import {css} from 'emotion';
+import {css, cx} from 'emotion';
 
-const className = css`
+const base = css`
     position: absolute;
     bottom: 0;
     padding: 1em;
@@ -19,7 +19,7 @@ const IndexButtonsContainer = props => {
     const {innerProps, children} = props;
 
     return (
-        <div className={className} {...innerProps}>
+        <div className={cx('index-buttons-container', base)} {...innerProps}>
             {children}
         </div>
     );

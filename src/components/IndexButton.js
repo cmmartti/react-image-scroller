@@ -44,11 +44,15 @@ const IndexButton = props => {
 
     return (
         <button
-            className={cx(
-                base,
-                {[current]: isCurrent},
-                {[nextOrPrevious]: isNext || isPrevious}
-            )}
+            className={cx({
+                'index-button': true,
+                'index-button--current': isCurrent,
+                'index-button--next': isNext,
+                'index-button--previous': isPrevious,
+                [base]: true,
+                [current]: isCurrent,
+                [nextOrPrevious]: isNext || isPrevious,
+            })}
             title={index}
             {...innerProps}
         >

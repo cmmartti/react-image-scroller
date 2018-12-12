@@ -1,9 +1,9 @@
 import React from 'react';
-import {css} from 'emotion';
+import {css, cx} from 'emotion';
 
 // -webkit-overflow-scrolling: touch;
 
-const className = css`
+const base = css`
     display: flex;
     overflow-x: scroll;
     overflow-y: hidden;
@@ -19,7 +19,11 @@ const ScrollContainer = props => {
     const {innerRef, innerProps, children} = props;
 
     return (
-        <div ref={innerRef} className={className} {...innerProps}>
+        <div
+            ref={innerRef}
+            className={cx('scroll-container', base)}
+            {...innerProps}
+        >
             {children}
         </div>
     );

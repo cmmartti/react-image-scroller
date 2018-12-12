@@ -1,7 +1,7 @@
 import React from 'react';
-import {css} from 'emotion';
+import {css, cx} from 'emotion';
 
-const className = css`
+const base = css`
     height: 25em;
     background: hsla(0, 0%, 50%, 0.2);
     border-radius: 0.4rem;
@@ -12,10 +12,10 @@ const className = css`
 `;
 
 const ImageScrollerContainer = props => {
-    const {innerRef, innerProps, children} = props;
+    const {innerRef, className, innerProps, children} = props;
 
     return (
-        <div ref={innerRef} {...innerProps} className={className}>
+        <div ref={innerRef} className={cx(className, base)} {...innerProps}>
             {children}
         </div>
     );

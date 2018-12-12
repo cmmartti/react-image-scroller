@@ -1,4 +1,6 @@
 import React from 'react';
+import {cx} from 'emotion';
+
 import {defaultComponents} from './components/index';
 
 export default class ImageScroller extends React.Component {
@@ -261,6 +263,7 @@ export default class ImageScroller extends React.Component {
                 innerProps={{
                     tabIndex: 0,
                 }}
+                className={this.props.className}
             >
                 <NavButton
                     isPrevious
@@ -270,7 +273,7 @@ export default class ImageScroller extends React.Component {
                     }}
                 />
 
-                <IndexButtonsContainer>
+                <IndexButtonsContainer className="index-buttons-container">
                     {images.map((image, imageIndex) => (
                         <IndexButton
                             key={imageIndex}
@@ -286,7 +289,10 @@ export default class ImageScroller extends React.Component {
                     ))}
                 </IndexButtonsContainer>
 
-                <ScrollContainer innerRef={this.scrollContainerRef}>
+                <ScrollContainer
+                    innerRef={this.scrollContainerRef}
+                    className="scroll-container"
+                >
                     {images.map((image, imageIndex) => (
                         <ImageWrapper
                             key={imageIndex}

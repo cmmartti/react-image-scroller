@@ -43,7 +43,14 @@ const ImageWrapper = props => {
 
     return (
         <div
-            className={cx(base, {[nextOrPrevious]: isNext || isPrevious})}
+            className={cx({
+                'image-wrapper': true,
+                'image-wrapper--current': isCurrent,
+                'image-wrapper--next': isNext,
+                'image-wrapper--previous': isPrevious,
+                [base]: true,
+                [nextOrPrevious]: isNext || isPrevious,
+            })}
             {...innerProps}
         >
             {children}
