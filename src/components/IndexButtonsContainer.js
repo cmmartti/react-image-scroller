@@ -4,9 +4,10 @@ import {css, cx} from 'emotion';
 const base = css`
     position: absolute;
     bottom: 0;
+    left: 0;
     padding: 1em;
-    left: 50%;
-    transform: translateX(-50%);
+    /* left: 50%;
+    transform: translateX(-50%); */
     display: flex;
     flex-wrap: wrap;
     justify-content: center;

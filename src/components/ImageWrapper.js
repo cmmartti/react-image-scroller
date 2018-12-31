@@ -35,6 +35,7 @@ const nextOrPrevious = css`
         right: 0;
         z-index: 2;
         background-color: hsla(0, 0%, 21%, 0.15);
+        pointer-events: none;
     }
 `;
 

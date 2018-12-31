@@ -63,7 +63,7 @@ export default class ImageScroller extends React.Component {
         if (scrollContainer && main) {
             const offset = main.clientHeight - scrollContainer.clientHeight;
 
-            // Webkit measures initial offset as 0, so try up to three times, 10 ms apart
+            // Initial offset may be 0, so try up to three times, 10 ms apart
             this.hideScrollbarCounter += 1;
             if (offset === 0 && this.hideScrollbarCounter <= 3) {
                 setTimeout(this.hideScrollbar, 10);

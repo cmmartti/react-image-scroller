@@ -25,7 +25,7 @@ const right = css`
 
 const NavButton = props => {
     const {innerProps, isPrevious, isNext, isDisabled} = props;
-    const title = isPrevious ? "Scroll Left" : "Scroll Right";
+    const title = isPrevious ? "Previous" : "Next";
 
     return (
         <button
