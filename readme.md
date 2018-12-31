@@ -19,7 +19,7 @@ Then open [localhost:8000](localhost:8000) in a browser.
 
 ## Installation
 
-The easiest way to use React-Image-Scroller is to install it from NPM and include it in your own React build process.
+The easiest way to use React-Image-Scroller is to install it from NPM and include it in your own React build process. Don't forget to install any necessary polyfills (see below).
 
 ```
 npm install react-image-scroller --save
@@ -31,7 +31,7 @@ You can also use the UMD build by including `dist/ImageScroller.js` in your page
 
 If you are targeting browsers that don't support [IntersectionObserver](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver), you must include a polyfill, such as [w3c/IntersectionObserver/polyfill](https://github.com/w3c/IntersectionObserver/tree/master/polyfill).
 
-If you wish to support smooth scrolling when navigating through the ImageScroller using the buttons or the keyboard, you must include a polyfill for smooth scrolling behaviour, such as [iamdustan/smoothscroll](https://github.com/iamdustan/smoothscroll).
+If you wish to support smooth scrolling for all browsers when navigating through the ImageScroller using the buttons or the keyboard, you must include a polyfill for smooth scrolling behaviour, such as [iamdustan/smoothscroll](https://github.com/iamdustan/smoothscroll).
 
 ## Usage
 
@@ -53,11 +53,11 @@ import ImageScroller from 'react-image-scroller';
 
 React-Image-Scroller has no configuration. However, the default base components can easily be replaced with your own, allowing you to change how they look and work. A complete example is shown at the end of this section.
 
-A React-Image-Scroller component has the following internal structure. The props shown are passed to each component, in addition to `innerProps` (see below).
+A React-Image-Scroller component has the following _internal_ structure. The props shown are passed to each component, in addition to `innerProps` (see below).
 
 ```jsx
 <ImageScrollerContainer innerRef>
-    <NavButton previous />
+    <NavButton isPrevious />
 
     <IndexButtonsContainer>
         <IndexButton index="1" image />
@@ -85,7 +85,7 @@ A React-Image-Scroller component has the following internal structure. The props
         </ImageWrapper>
     </ScrollContainer>
 
-    <NavButton next />
+    <NavButton isNext />
 </ImageScrollerContainer>
 ```
 
