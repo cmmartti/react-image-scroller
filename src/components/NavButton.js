@@ -40,7 +40,7 @@ const NavButton = props => {
                 'nav-button--disabled': isDisabled,
             })}
             title={title}
-            aria-title={title}
+            aria-label={title}
             {...innerProps}
         >
             {isPrevious && '◄'}
