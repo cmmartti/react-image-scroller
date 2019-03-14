@@ -1,6 +1,6 @@
 {
     "name": "react-image-scroller",
-    "version": "0.1.5",
+    "version": "0.1.6",
     "description": "A simple scrolling image gallery for React.",
     "author": "Charles Marttinen <mail@charlesmarttinen.ca>",
     "main": "lib/index.js",
