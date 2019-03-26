@@ -253,6 +253,7 @@ export default class ImageScroller extends React.Component {
             IndexButtonsContainer,
             ImageWrapper,
             ImageScrollerContainer,
+            NavButtonsContainer,
             NavButton,
             ScrollContainer,
         } = this.components;
@@ -265,13 +266,22 @@ export default class ImageScroller extends React.Component {
                 }}
                 className={this.props.className}
             >
-                <NavButton
-                    isPrevious
-                    isDisabled={previous === null}
-                    innerProps={{
-                        onClick: this.previous,
-                    }}
-                />
+                <NavButtonsContainer>
+                    <NavButton
+                        isPrevious
+                        isDisabled={previous === null}
+                        innerProps={{
+                            onClick: this.previous,
+                        }}
+                    />
+                    <NavButton
+                        isNext
+                        isDisabled={next === null}
+                        innerProps={{
+                            onClick: this.next,
+                        }}
+                    />
+                </NavButtonsContainer>
 
                 <IndexButtonsContainer className="index-buttons-container">
                     {images.map((image, imageIndex) => (
@@ -309,14 +319,6 @@ export default class ImageScroller extends React.Component {
                         </ImageWrapper>
                     ))}
                 </ScrollContainer>
-
-                <NavButton
-                    isNext
-                    isDisabled={next === null}
-                    innerProps={{
-                        onClick: this.next,
-                    }}
-                />
             </ImageScrollerContainer>
         );
     }
