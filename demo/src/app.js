@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import smoothscroll from 'smoothscroll-polyfill';
 import 'intersection-observer';
+import 'es6-symbol/implement';
 import ImageScroller from 'react-image-scroller';
 
 smoothscroll.polyfill();

@@ -2,12 +2,11 @@ import babel from 'rollup-plugin-babel';
 import resolve from 'rollup-plugin-node-resolve';
 import {uglify} from 'rollup-plugin-uglify';
 import {minify} from 'uglify-es';
-import pkg from './package.json';
+import {module} from './package.json';
 
 const name = 'ImageScroller';
 const path = 'dist/react-image-scroller';
 const globals = {
-    classnames: 'classNames',
     'prop-types': 'PropTypes',
     'react-dom': 'ReactDOM',
     react: 'React',
@@ -28,7 +27,7 @@ export default [
     {
         input: 'src/index.js',
         output: {
-            file: pkg.module,
+            file: module,
             format: 'es',
         },
         external: [...external],
