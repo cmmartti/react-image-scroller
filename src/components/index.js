@@ -6,7 +6,7 @@ import NavButtonsContainer from './NavButtonsContainer';
 import NavButton from './NavButton';
 import ScrollContainer from './ScrollContainer';
 
-const components = {
+export default {
     IndexButton,
     IndexButtonsContainer,
     ImageWrapper,
@@ -15,8 +15,3 @@ const components = {
     NavButton,
     ScrollContainer,
 };
-
-export const defaultComponents = props => ({
-    ...components,
-    ...props.components,
-});
