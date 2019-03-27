@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import ImageScroller from 'react-image-scroller';
 import smoothscroll from 'smoothscroll-polyfill';
+import 'intersection-observer';
+import ImageScroller from 'react-image-scroller';
 
 smoothscroll.polyfill();
 

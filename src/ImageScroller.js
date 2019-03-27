@@ -1,4 +1,6 @@
 import React, {useRef, useState, useEffect} from 'react';
+import './array-includes-polyfill';
+import './array-from-polyfill';
 
 import defaultComponents from './components';
 
@@ -48,7 +50,12 @@ function getStatus(items) {
     return {previous, current, next};
 }
 
-export default function ImageScroller({children, components = {}, ...props}) {
+export default function ImageScroller({
+    children,
+    hideScrollbar = true,
+    components = {},
+    ...props
+}) {
     const mainRef = useRef(null);
     const scrollContainerRef = useRef(null);
 
@@ -59,27 +66,30 @@ export default function ImageScroller({children, components = {}, ...props}) {
         next: null,
     });
 
+    // For browsers that can't hide the scrollbar using CSS, do it manually with a hidden overflow
     useEffect(() => {
-        let hideScrollbarCounter = 0;
-        function hideScrollbar() {
+        let retryCounter = 0;
+        function hide() {
             const scrollContainer = scrollContainerRef.current;
             const main = mainRef.current;
 
             if (scrollContainer && main) {
-                const offset = main.clientHeight - scrollContainer.clientHeight;
+                const scrollbarWidth =
+                    main.clientHeight - scrollContainer.clientHeight;
 
-                // Initial offset may be 0 in some browsers, so try more than once
-                hideScrollbarCounter += 1;
-                if (offset === 0 && hideScrollbarCounter <= 3) {
-                    setTimeout(hideScrollbar, 10);
+                // Initial measurement may be 0 in some browsers, so try more than once
+                retryCounter += 1;
+                if (scrollbarWidth === 0 && retryCounter <= 3) {
+                    setTimeout(hide, 10);
                 } else {
-                    scrollContainer.style.height = `calc(100% + ${offset}px)`;
+                    scrollContainer.style.height = `calc(100% + ${scrollbarWidth}px)`;
                 }
             }
         }
-
-        hideScrollbar();
-    }, []);
+        if (hideScrollbar) {
+            hide();
+        }
+    }, [hideScrollbar]);
 
     useEffect(() => {
         // IntersectionObservers only report what's _changed_, so keep a list
@@ -274,6 +284,7 @@ export default function ImageScroller({children, components = {}, ...props}) {
             <ScrollContainer
                 innerRef={scrollContainerRef}
                 className="scroll-container"
+                hideScrollbar={hideScrollbar}
             >
                 {images.map((image, imageIndex) => (
                     <ImageWrapper

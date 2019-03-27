@@ -1,13 +1,14 @@
 import React from 'react';
 import {css, cx} from 'emotion';
 
-// -webkit-overflow-scrolling: touch;
-
 const base = css`
     display: flex;
     overflow-x: scroll;
     overflow-y: hidden;
     height: 100%;
+    -webkit-overflow-scrolling: touch;
+`;
+const hideScrollbarCSS = css`
     ::-webkit-scrollbar {
         display: none;
     }
@@ -15,13 +16,13 @@ const base = css`
     scrollbar-width: none;
 `;
 
-const ScrollContainer = props => {
-    const {innerRef, innerProps, children} = props;
-
+const ScrollContainer = ({innerRef, innerProps, children, hideScrollbar}) => {
     return (
         <div
             ref={innerRef}
-            className={cx('scroll-container', base)}
+            className={cx('scroll-container', base, {
+                [hideScrollbarCSS]: hideScrollbar,
+            })}
             {...innerProps}
         >
             {children}
