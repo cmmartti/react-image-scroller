@@ -1,0 +1,119 @@
+fieldset {
+    margin: 0.5em 0;
+}
+
+table {
+    border-collapse: collapse;
+    margin: 0.5em 0;
+}
+table caption {
+    text-align: left;
+}
+td,
+th {
+    border: 1px solid black;
+    padding: 0.15em 0.25em;
+    text-align: left;
+    min-width: 3em;
+}
+
+.image-gallery {
+    position: relative;
+    margin-top: 1em;
+}
+
+.scroller {
+    height: 25em;
+    background: rebeccapurple;
+    border: 10px solid rebeccapurple;
+}
+.scroller__scroll-container {
+}
+.scroller__scroll-container--use-thin {
+    scrollbar-width: thin;
+}
+
+.scroller__inner > * + * {
+    /* margin-left: -3em; */
+}
+.scroller__inner > *:not(:last-child) {
+    margin-right: -3em;
+}
+.scroller__inner > * {
+    mask-image: linear-gradient(
+        to right,
+        rgba(0, 0, 0, 0) 0%,
+        rgba(0, 0, 0, 1) 1.5em,
+        rgba(0, 0, 0, 1) calc(100% - 1.5em),
+        rgba(0, 0, 0, 0) 100%
+    );
+}
+.scroller__inner > :first-child {
+    mask-image: linear-gradient(
+        to right,
+        rgba(0, 0, 0, 1) calc(100% - 1.5em),
+        rgba(0, 0, 0, 0) 100%
+    );
+}
+.scroller__inner > :last-child {
+    mask-image: linear-gradient(
+        to right,
+        rgba(0, 0, 0, 0) 0%,
+        rgba(0, 0, 0, 1) 1.5em
+    );
+}
+
+.nav-button {
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2em;
+    font-weight: bold;
+    padding: 0.25em;
+    border-radius: 0;
+    background: rebeccapurple;
+    color: white;
+    user-select: none;
+}
+.nav-button--next {
+    right: 0;
+    transform: translate(calc(50% - 4px), -50%);
+}
+.nav-button--previous {
+    left: 0;
+    transform: translate(calc(-50% + 4px), -50%);
+}
+
+.index-buttons {
+    width: 100%;
+    display: flex;
+    margin: 1em;
+    flex-wrap: wrap;
+    justify-content: center;
+    pointer-events: none;
+    position: absolute;
+    bottom: 0;
+}
+
+.index-button {
+    pointer-events: initial;
+    padding: 0.5em;
+    border-radius: 50%;
+    background: #f0f0f0;
+}
+.index-button + .index-button {
+    margin-left: 0.75em;
+}
+.index-button--current,
+.index-button--adjacent + .index-button--adjacent {
+    background: rebeccapurple;
+}
+
+.image-wrapper--scrollbar {
+    border-bottom: 10px solid rebeccapurple;
+}
+.image-wrapper img {
+    height: 100%;
+    width: auto;
+    display: block;
+}

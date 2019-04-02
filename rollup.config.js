@@ -30,7 +30,7 @@ export default [
             file: module,
             format: 'es',
         },
-        external: [...external],
+        external,
         plugins: [babel(babelOptions)],
     },
     {

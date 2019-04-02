@@ -11,16 +11,212 @@ export function ImageScrollerContainer({
         <div
             ref={innerRef}
             className={cx({
-                [className]: true,
                 [css`
-                    height: 25em;
-                    background: hsla(0, 0%, 50%, 0.2);
-                    border-radius: 0.4rem;
-
-                    max-height: 100vw;
-                    overflow-y: hidden;
+                    height: 28em;
                     position: relative;
+                    box-sizing: border-box;
+                    * {
+                        box-sizing: inherit;
+                    }
                 `]: true,
+                [className]: true,
+            })}
+            {...innerProps}
+        >
+            {children}
+        </div>
+    );
+}
+
+export function NavButtonsContainer({innerProps, children}) {
+    return (
+        <div
+            className={cx({
+                [css`
+                    display: absolute;
+                    top: 0;
+                    right: 0;
+                    bottom: 0;
+                    left: 0;
+                `]: true,
+                'nav-buttons-container': true,
+            })}
+            {...innerProps}
+        >
+            {children}
+        </div>
+    );
+}
+
+export function NavButton({innerProps, isPrevious, isNext, isDisabled}) {
+    const title = isPrevious ? 'Previous' : 'Next';
+
+    return (
+        <button
+            disabled={isDisabled}
+            className={cx({
+                [css`
+                    top: calc(50% - 1.25em);
+                    position: absolute;
+
+                    font-size: 1em;
+                    padding: 0.75em 0.35em;
+                    padding: 0;
+                    line-height: 1;
+                    border-radius: 0;
+                    /* background: hsla(0, 0%, 50%, 0.75); */
+                    /* background: none;
+                    border: none; */
+                    z-index: 2;
+                    /* color: white; */
+                    /* &:focus {
+                        outline: 2px solid red;
+                        &::-moz-focus-inner {
+                            border: none;
+                        }
+                    } */
+                    &[disabled] {
+                        /* background: hsla(0, 0%, 50%, 0.5); */
+                        color: #888;
+                        /* display: none; */
+                        opacity: 0.5;
+                    }
+
+                    > * {
+                        height: 2em;
+                    }
+                `]: true,
+                [css`
+                    left: 0;
+                `]: isPrevious,
+                [css`
+                    right: 0;
+                `]: isNext,
+                'nav-button': true,
+                'nav-button--previous': isPrevious,
+                'nav-button--next': isNext,
+                'nav-button--disabled': isDisabled,
+            })}
+            title={title}
+            aria-label={title}
+            {...innerProps}
+        >
+            {isPrevious && (
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                >
+                    <path d="M10 13h8V7h-8V2l-8 8 8 8v-5z" />
+                </svg>
+            )}
+            {isNext && (
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                >
+                    <path d="M10 7H2v6h8v5l8-8-8-8v5z" />
+                </svg>
+            )}
+        </button>
+    );
+}
+
+export function IndexButtonsContainer({innerProps, children}) {
+    return (
+        <div
+            className={cx({
+                [css`
+                    position: absolute;
+                    bottom: 0.5em;
+                    left: 0;
+
+                    padding: 1em;
+                    width: 100%;
+                    pointer-events: none;
+                    z-index: 3;
+
+                    display: flex;
+                    flex-wrap: wrap;
+                    justify-content: center;
+                    align-items: center;
+
+                    * {
+                        pointer-events: auto;
+                    }
+                `]: true,
+                'index-buttons-container': true,
+            })}
+            {...innerProps}
+        >
+            {children}
+        </div>
+    );
+}
+
+export function IndexButton({
+    innerProps,
+    index,
+    isCurrent,
+    isNext,
+    isPrevious,
+}) {
+    return (
+        <button
+            className={cx({
+                [css`
+                    padding: 0.4em;
+                    margin: 0.625em;
+                    border-radius: 50%;
+                    box-shadow: 1px 1px 2px hsla(0, 0%, 0%, 0.75);
+                    &:focus {
+                        outline: 1px dotted;
+                        outline-offset: 0.25em;
+                    }
+                `]: true,
+                [css`
+                    background: hsl(0, 100%, 36%);
+                `]: isCurrent,
+                [css`
+                    background: dimgray;
+                    & + & {
+                        background: hsl(0, 100%, 36%);
+                    }
+                `]: isNext || isPrevious,
+                'index-button': true,
+                'index-button--current': isCurrent,
+                'index-button--next': isNext,
+                'index-button--previous': isPrevious,
+            })}
+            title={index}
+            {...innerProps}
+        />
+    );
+}
+
+export function ScrollContainer({
+    innerRef,
+    innerProps,
+    children,
+    hideScrollbar,
+}) {
+    return (
+        <div
+            ref={innerRef}
+            className={cx({
+                [css`
+                    display: flex;
+                    overflow-x: scroll;
+                    height: 100%;
+                    /* overscroll-behavior: none; */
+                    scrollbar-width: thin;
+                `]: true,
+                [css`
+                    -ms-overflow-style: none;
+                    scrollbar-width: none;
+                `]: hideScrollbar,
+                'scroll-container': true,
             })}
             {...innerProps}
         >
@@ -40,224 +236,56 @@ export function ImageWrapper({
     return (
         <div
             className={cx({
+                [css`
+                    flex: 0 0 auto;
+                    height: 100%;
+                    max-width: 100%;
+                    display: flex;
+                    align-items: flex-start;
+                    background: lightgray;
+                    user-select: none;
+
+                    /* & + & {
+                        margin-left: -3em;
+                    }
+
+                    > * {
+                        mask-image: linear-gradient(
+                            to right,
+                            rgba(0, 0, 0, 0) 0%,
+                            rgba(0, 0, 0, 1) 1.5em,
+                            rgba(0, 0, 0, 1) calc(100% - 1.5em),
+                            rgba(0, 0, 0, 0) 100%
+                        );
+                    }
+                    &:first-child > * {
+                        mask-image: linear-gradient(
+                            to right,
+                            rgba(0, 0, 0, 1) calc(100% - 1.5em),
+                            rgba(0, 0, 0, 0) 100%
+                        );
+                    }
+                    &:last-child > * {
+                        mask-image: linear-gradient(
+                            to right,
+                            rgba(0, 0, 0, 0) 0%,
+                            rgba(0, 0, 0, 1) 1.5em
+                        );
+                    } */
+
+                    > * {
+                        flex: 0 1;
+                        height: 100%;
+                        width: auto;
+                        max-width: 100%;
+                        display: block;
+                        object-fit: contain;
+                    }
+                `]: true,
                 'image-wrapper': true,
                 'image-wrapper--current': isCurrent,
                 'image-wrapper--next': isNext,
                 'image-wrapper--previous': isPrevious,
-                [css`
-                    flex: 0 0 auto;
-                    max-height: 100%;
-                    max-width: 100%;
-                    height: 100%;
-                    width: auto;
-                    position: relative;
-
-                    &:first-child {
-                        border-radius: 0.4em 0 0 0.4em;
-                    }
-                    &:last-child {
-                        border-radius: 0 0.4em 0.4em 0;
-                    }
-
-                    img {
-                        height: 100%;
-                        width: auto;
-                        max-height: 100%;
-                        max-width: 100%;
-                        object-fit: contain;
-                    }
-                `]: true,
-                [css`
-                    &:hover::after {
-                        content: '';
-                        position: absolute;
-                        top: 0;
-                        left: 0;
-                        bottom: 0;
-                        right: 0;
-                        z-index: 2;
-                        background-color: hsla(0, 0%, 21%, 0.15);
-                        pointer-events: none;
-                    }
-                `]: isNext || isPrevious,
-            })}
-            {...innerProps}
-        >
-            {children}
-        </div>
-    );
-}
-
-export function IndexButton({
-    innerProps,
-    index,
-    isCurrent,
-    isNext,
-    isPrevious,
-}) {
-    return (
-        <button
-            className={cx({
-                'index-button': true,
-                'index-button--current': isCurrent,
-                'index-button--next': isNext,
-                'index-button--previous': isPrevious,
-                [css`
-                    pointer-events: auto;
-                    border: none;
-                    color: white;
-                    background: hsla(0, 0%, 0%, 0.8);
-                    width: 1em;
-                    height: 1em;
-                    align-self: center;
-                    margin: 0.75em;
-                    border-radius: 50%;
-                    padding: 0em;
-                    font-family: serif;
-                    box-shadow: 0 0 2px hsla(0, 0%, 100%, 1);
-                `]: true,
-                [css`
-                    background: black;
-                    min-width: 2em;
-                    min-height: 2em;
-                    margin: 0 0.25em;
-                `]: isCurrent,
-                [css`
-                    width: 1.4em;
-                    height: 1.4em;
-                    margin: 0 0.65em;
-
-                    & + &::after {
-                        content: '';
-                        display: block;
-                        height: 0.75em;
-                        width: 0.75em;
-                        transform: translateX(-1em);
-                        background: black;
-                        border-radius: 100%;
-                    }
-                `]: isNext || isPrevious,
-            })}
-            title={index}
-            {...innerProps}
-        >
-            {isCurrent && index}
-        </button>
-    );
-}
-
-export function IndexButtonsContainer({innerProps, children}) {
-    return (
-        <div
-            className={cx({
-                'index-buttons-container': true,
-                [css`
-                    position: absolute;
-                    bottom: 0;
-                    left: 0;
-                    padding: 1em;
-                    /* left: 50%;
-                    transform: translateX(-50%); */
-                    display: flex;
-                    flex-wrap: wrap;
-                    justify-content: center;
-                    z-index: 3;
-                    pointer-events: none;
-                    width: 100%;
-                `]: true,
-            })}
-            {...innerProps}
-        >
-            {children}
-        </div>
-    );
-}
-
-export function NavButton({innerProps, isPrevious, isNext, isDisabled}) {
-    const title = isPrevious ? 'Previous' : 'Next';
-    return (
-        <button
-            disabled={isDisabled}
-            className={cx({
-                [css`
-                    background: hsla(0, 0%, 21%, 0.6);
-                    color: white;
-                    height: 4em;
-                    top: calc(50% - 2em);
-                    position: absolute;
-                    border: none;
-                    z-index: 2;
-
-                    &[disabled] {
-                        background: hsla(0, 0%, 21%, 0.3);
-                    }
-                `]: true,
-                [css`
-                    left: 0;
-                `]: isPrevious,
-                [css`
-                    right: 0;
-                `]: isNext,
-                'nav-button': true,
-                'nav-button--previous': isPrevious,
-                'nav-button--next': isNext,
-                'nav-button--disabled': isDisabled,
-            })}
-            title={title}
-            aria-label={title}
-            {...innerProps}
-        >
-            {isPrevious && '◄'}
-            {isNext && '►'}
-        </button>
-    );
-}
-
-export function NavButtonsContainer({innerProps, children}) {
-    return (
-        <div
-            className={cx({
-                'nav-buttons-container': true,
-                [css`
-                    display: absolute;
-                    top: 0;
-                    right: 0;
-                    bottom: 0;
-                    left: 0;
-                `]: true,
-            })}
-            {...innerProps}
-        >
-            {children}
-        </div>
-    );
-}
-
-export function ScrollContainer({
-    innerRef,
-    innerProps,
-    children,
-    hideScrollbar,
-}) {
-    return (
-        <div
-            ref={innerRef}
-            className={cx({
-                'scroll-container': true,
-                [css`
-                    display: flex;
-                    overflow-x: scroll;
-                    overflow-y: hidden;
-                    height: 100%;
-                    -webkit-overflow-scrolling: touch;
-                `]: true,
-                [css`
-                    ::-webkit-scrollbar {
-                        display: none;
-                    }
-                    -ms-overflow-style: none;
-                    scrollbar-width: none;
-                `]: hideScrollbar,
             })}
             {...innerProps}
         >

@@ -51,6 +51,10 @@ module.exports = env => {
                     use: {loader: 'babel-loader'},
                 },
                 {
+                    test: /\.css$/,
+                    use: ['style-loader', 'css-loader'],
+                },
+                {
                     test: /\.html$/,
                     use: [{loader: 'html-loader'}],
                 },

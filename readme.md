@@ -1,21 +1,24 @@
 # React Image Scroller
 
-A simple scrolling image gallery for React. Unlike every other image gallery, this one is designed to show multiple images at once, without cropping them. It is not designed to be a cinematic experience, but rather an alternative to splashing a bunch of images on screen directly. Great for screenshots and other odd-shaped content.
-
-When used with server-side rendering and a client does not have JavaScript, React-Image-Scroller will fall back to a simple horizontally-scrolling container with a scrollbar. Otherwise, the scrollbar is automatically hidden and the scrolling container is augmented with additional behaviour, such as next/previous buttons, scroll snapping, and index buttons.
+A basic component for making scrolling galleries based on a horizontally scrolling container.
 
 ## Demo
 
 Live demo at [cmmartti.github.io/react-image-scroller](https://cmmartti.github.io/react-image-scroller/).
 
-To run the examples locally, run:
+## How is this any different than every other image gallery?
 
-```
-npm install
-npm start
-```
+It doesn't try to reinvent the wheel. Rather than creating all of the functionality an image gallery needs from scratch, it builds on top of existing functionality that the browser already provides. Namely, it uses a horizontally scrolling container augmented with additional behaviour, which gives us a lot of free functionality that performs much better than a custom implementation ever could, such as native scrolling performance, scroll bars (if desired), automatic touch support, and scroll wheel support. The end product is one that is much more enjoyable to use, while most other JavaScript image galleries feel like heavy, opaque black boxes that are cumbersome to manipulate.
 
-Then open [localhost:8000](localhost:8000) in a browser.
+This component can also display multiple images side-by-side, and does not require all images to be the same size. This makes it work well for displaying odd-sized content like screenshots, or a mix of portait and landscape photographs.
+
+Furthermore, React Image Scroller is bare bones. It does not try to include bells and whistles that can be trivially implemented if they are needed. It is simply a wrapper component that handles all the tricky calculations required for the augmented scrolling behaviour and exposes that functionality through a few instance methods (`next`, `previous`, and `scrollTo`). It also accepts a render prop called `renderWithin` that allows you (the developer) to draw whatever custom elements you need on top of the scrolling container, including next/previous arrows or index buttons.
+
+## Browser Support
+
+With polyfills (see below), React Image Scroller works reasonably well in all recent browsers, including Internet Explorer 11**.
+
+** Except for the use of `object-fit: contain` on IE11, which prevents images from being stretched. Unless you plan on using this component at narrow widths with wide images on the desktop, this shouldn't be a problem.
 
 ## Installation
 
@@ -27,11 +30,13 @@ npm install react-image-scroller --save
 
 You can also use the UMD build by including `dist/ImageScroller.js` in your page. If you use this, make sure you have already included a UMD React build.
 
-### Polyfills
+## Polyfills
 
-If you are targeting browsers that don't support [IntersectionObserver](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver), you must include a polyfill, such as [w3c/IntersectionObserver/polyfill](https://github.com/w3c/IntersectionObserver/tree/master/polyfill).
+React Image Scroller uses the following browser features which are not yet available in all browsers. However, there are polyfills available that backfill the functionality:
 
-If you wish to support smooth scrolling for all browsers when navigating through the ImageScroller using the buttons or the keyboard, you must include a polyfill for smooth scrolling behaviour, such as [iamdustan/smoothscroll](https://github.com/iamdustan/smoothscroll).
+- **[IntersectionObserver](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver)** (required): Use [w3c/IntersectionObserver/polyfill](https://github.com/w3c/IntersectionObserver/tree/master/polyfill). Safari and Internet Explorer [do not support IntersectionObserver](https://caniuse.com/#feat=intersectionobserver).
+
+- **Smooth scrolling** (optional): If you wish to support smooth scrolling for all browsers when navigating through the image scroller, you must include a polyfill for smooth scrolling behaviour, such as [iamdustan/smoothscroll](https://github.com/iamdustan/smoothscroll). Internet Explorer, Edge, and Safari [do not support smooth scrolling](https://caniuse.com/#feat=css-scroll-behavior).
 
 ## Usage
 
@@ -49,93 +54,59 @@ import ImageScroller from 'react-image-scroller';
 </ImageScroller>
 ```
 
-## Customisation and Configuration
+## Props
 
-React-Image-Scroller has no configuration. However, the default base components can easily be replaced with your own, allowing you to change how they look and work. A complete example is shown at the end of this section.
+- **`children`**/**`items`**: A list of elements to render. (default: `[]`)
+- boolean **`hideScrollbar`**: Hide the horizontal scrollbar on the scroll container. (default: `true`)
+- string **`innerClassName`**: A class name to set on the element that wraps the items. (default: `''`)
+- object **`innerStyle`**: A style object to set on the element that wraps the items. (default: `{}`)
+- (`status`: Status) => any **`onChange`**: A function to call whenever the status changes. Status is an object that contains the indices of items in each position:
 
-A React-Image-Scroller component has the following _internal_ structure. The props shown are passed to each component, in addition to `innerProps` (see below).
+  ```
+  {
+       previous: int | null;
+       current: int[];
+       next: int | null;
+   }
+  ```
 
-```jsx
-<ImageScrollerContainer innerRef>
-    <NavButton isPrevious />
+- (`provided`) => ReactNode **`renderWithin`**: A function that returns a ReactNode that will be rendered inside a `div` that is absolutely positioned over the image scroller. This `div` fills the width of the image scroller, but is contained within the vertical bounds of the scrolling container, i.e., it does not overlap the scrollbar if it is present. `provided` is an object containing handy values and methods:
 
-    <IndexButtonsContainer>
-        <IndexButton index="1" image />
-        <IndexButton index="2" image isPrevious />
-        <IndexButton index="3" image isCurrent />
-        <IndexButton index="4" image isCurrent />
-        <IndexButton index="5" image isNext />
-    </IndexButtonsContainer>
+  ```
+  {
+       scrollTo: (itemIndex: int) => any;
+       next: () => any;
+       previous: () => any;
+       items: ReactNode[];
+       status: Status;
+   }
+  ```
 
-    <ScrollContainer innerRef>
-        <ImageWrapper index="1">
-            <img src="1.jpg" alt="First" />
-        </ImageWrapper>
-        <ImageWrapper index="2" isPrevious>
-            <img src="2.jpg" alt="Second" />
-        </ImageWrapper>
-        <ImageWrapper index="3" isCurrent>
-            <img src="3.jpg" alt="Third" />
-        </ImageWrapper>
-        <ImageWrapper index="4" isCurrent>
-            <img src="4.jpg" alt="Fourth" />
-        </ImageWrapper>
-        <ImageWrapper index="5" isNext>
-            <img src="5.jpg" alt="Fifth" />
-        </ImageWrapper>
-    </ScrollContainer>
+- boolean **`scrollOnClick`**: Bring the item fully into view when it is clicked. (default: `true`)
 
-    <NavButton isNext />
-</ImageScrollerContainer>
+- boolean **`scrollWithArrows`**: Scroll to the next/previous when the right/left arrow keys are pressed, if the image scroller contains the focus. (default: `true`)
+
+- string **`scrollContainerClassName`**: A class name to set on the scroll container. (default: `''`)
+
+- object **`scrollContainerStyle`**: A style object to set on the scroll container. (default: `{}`)
+
+All other props will be passed on to the root `div`.
+
+## Methods
+
+You can manipulate the scroll position of the image scroller by calling these methods on the component's ref:
+
+- **`scrollTo`**: (itemIndex: int) => any Scroll the scroll container so that the item of index `itemIndex` is positioned in the centre.
+- **`next`**: () => any Scroll the scroll container to the next item, fitting in as many items in view as possible.
+- **`previous`**: () => any Scroll the scroll container to the previous item, fitting in as many items in view as possible.
+
+## Development
+
+To run the examples locally, run:
+
+```
+npm install
+npm start
 ```
 
-Each component can be switched-out with your own by passing it into the `components` prop object, which will be merged with the default components:
-
-```jsx
-<ImageScroller components={{IndexButton: CustomIndexButton}}>
-    {...images}
-</ImageScroller>
-```
-
-This approach was inspired by [React-Select](https://react-select.com/components).
-
-### Inner Props and Inner Ref
-
-In addition to the props above, each component takes an `innerProps` prop that contains the functional properties that the component needs. `innerProps` must be spread onto the custom element.
-
-Some components also take an `innerRef` prop that React-Image-Scroller needs in order to manage internal behaviour. This must be assigned to the `ref` property of the relevant element:
-
-```jsx
-<div ref={innerRef} {...innerProps} />
-```
-
-### Complete Example
-
-```jsx
-import ImageScroller from 'react-image-scroller';
-
-const CustomIndexButton = props => {
-    const {
-        innerProps,
-        index,
-        image,
-        isCurrent,
-        isNext,
-        isPrevious
-    } = props;
-
-    var symbol;
-    if (isCurrent) symbol = index;
-    else if (isPrevious) symbol = '◀';
-    else if (isNext) symbol = '▶'
-    else symbol = '◦';
-
-    return (
-        <button {...innerProps}>{symbol}</button>
-    )
-}
-
-<ImageScroller components={{IndexButton: CustomIndexButton}}>
-    {...images}
-</ImageScroller>
-```
+Then open [localhost:8000](http://localhost:8000) in a browser.
