@@ -15,28 +15,18 @@
             }
             body {
                 margin: 0;
-                height: 100%;
-            }
-
-            .container {
+                min-height: 100%;
                 max-width: 1000px;
                 margin: 0 auto;
-                padding: 1.5em 2em;
+                padding: 1.5em 2em 3em;
                 background: ghostwhite;
-                height: 100vh;
-
-                display: flex;
-                flex-direction: column;
-            }
-            #app {
-                max-width: 100%;
-                flex: 1;
-            }
-            footer {
-                margin-top: 2em;
             }
             h1 {
                 margin: 0;
+            }
+
+            #app {
+                max-width: 100%;
             }
 
             @media (max-width: 1000px) {
@@ -47,20 +37,18 @@
         </style>
     </head>
     <body>
-        <div class="container">
-            <h1>React-Image-Scroller Demo</h1>
-            <h2>
-                <a href="http://github.com/cmmartti/react-image-scroller"
-                    >View project on GitHub</a
-                >
-            </h2>
-            <div id="app"></div>
-            <footer>
-                Copyright &copy;
-                <a href="https://charlesmarttinen.ca">Charles Marttinen</a>
-                2018. MIT Licensed.
-            </footer>
-        </div>
+        <h1>React-Image-Scroller Demo</h1>
+        <p>
+            Created by
+            <a href="https://charlesmarttinen.ca">Charles Marttinen</a> © 2018
+        </p>
+        <p>
+            <a href="http://github.com/cmmartti/react-image-scroller"
+                >View project on GitHub</a
+            >
+            (MIT licensed)
+        </p>
+        <div id="app"></div>
         <script src="app.js"></script>
     </body>
 </html>
